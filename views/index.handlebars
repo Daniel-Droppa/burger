@@ -1,0 +1,82 @@
+<div class="jumbotron">
+  <h1>Eat Da Burger!</h1>
+  {{!-- <img src="/public/assets/img/bitten-hamburger.jpg" class=".img-fluid burgerBite" alt="bitten cheeseburger"> --}}
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-5">
+      <h1>Ready to devour!</h1>
+      {{#each burgers}}
+      {{#unless devoured}}
+      <button type="button" data-devoured='{{devoured}}' class="btn btn-primary btn-lg btn-block devBurger"
+        data-movieid="{{this.id}}">{{ burger_name }}</button>
+      {{/unless}}
+      {{/each}}
+    </div>
+    <div class="col-5">
+      <h1>Devoured!</h1>
+      {{#each burgers}}
+      {{#if devoured}}
+      <button type="button" data-devoured='{{devoured}}' class="btn btn-primary btn-lg btn-block devBurger"
+        data-movieid="{{this.id}}">{{ burger_name }}</button>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="footer">
+  <div class="container-fluid addBurger">
+    <div class="row">
+      <div class="col-5">
+        <form id="addBurger">
+          <input class="form-control form-control-sm" type="text" placeholder="burger name" name="burgerName">
+          <button type="button" class="btn btn-primary submit" id="submit">Add Burger!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add Burger
+  $("#submit").on("click", function (event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+    if ($("#addBurger [name=burgerName]").val() === '' || $("#addBurger [name=burgerName]").val() === ' ') {
+      return alert('You cannot enter an empty burger name.')
+    }
+    const newBurger = {
+      burger_name: $("#addBurger [name=burgerName]").val().trim()
+    };
+    /* console.log(newBurger) */
+    $.ajax('/api/burgers', {
+      type: 'POST',
+      data: newBurger
+    }).then(
+      function () {
+        /*  console.log('add new burger'); */
+        location.reload();
+      });
+    const button = $('<button>')
+    $('.delbutton').append(button)
+  });
+  // Delete Burger
+  $(".devBurger").on("click", function (event) {
+    var id = $(this).data("movieid");
+    console.log(id, 'clicked')
+    $.ajax("/api/burgers/" + id, {
+      type: "PUT",
+      data: { devoured: $(this).data("devoured") }
+    }).then(
+      function () {
+       
+        location.reload();
+      }
+    );
+  });
+</script>
+
+

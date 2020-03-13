@@ -1,0 +1,43 @@
+body {
+    background-color: whitesmoke;
+}
+
+.jumbotron {
+    text-align: center;
+    background: lightseagreen
+}
+
+.burgerBite {
+    transform: scale(1);
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+hr {
+    margin: 55px 25px 0px 25px;
+}
+
+.col-5 {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: lightseagreen; 
+    border: 1px solid green;
+}
+
+.btn-primary:hover {
+    background-color: lightseagreen; 
+    border: 1px solid green;
+}
+
+.addBurger {
+    margin: 20px;
+}
+
+.submit {
+    margin: 20px;
+}
